@@ -30,5 +30,25 @@ def get_msg():
 
     return whatsapp_msg
 
-get_msg()
+# Posts
+def post_response(msg):
+    global x, y
+
+    position = pt.locateOnScreen("whatsapp/paperclip.png", confidence=.6)
+    x = position[0]
+    y = position[1]
+
+    pt.moveTo(x + 200, y + 20, duration=.5)
+    pt.click()
+    pt.typewrite(msg, interval=.01)
+
+    pt.typewrite("\n", interval=.01)
+
+
+#post_response(get_msg())
+n = 1
+
+while True:
+    post_response('Test bot number ' + str(n))
+    n+=1
 
