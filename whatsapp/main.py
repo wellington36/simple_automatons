@@ -3,6 +3,7 @@ import pyperclip
 import random
 from time import sleep
 from pynput.keyboard import Controller
+from requests import post
 
 sleep(2)
 
@@ -19,7 +20,7 @@ def get_msg():
     x = position[0]
     y = position[1]
 
-    pt.moveTo(x, y, duration=0.05)
+    pt.moveTo(x, y, duration=0.1)
     pt.moveTo(x + 40, y - 40, duration=.5) # Verify the window possition
     pt.tripleClick()
     pt.rightClick()
@@ -29,6 +30,7 @@ def get_msg():
 
 
     return whatsapp_msg
+
 
 # Posts
 def post_response(msg):
@@ -40,15 +42,26 @@ def post_response(msg):
 
     pt.moveTo(x + 200, y + 20, duration=.5)
     pt.click()
-    pt.typewrite(msg, interval=.01)
+    pt.typewrite(msg, interval=.05)
 
-    pt.typewrite("\n", interval=.01)
+    #pt.typewrite("\n", interval=.01)
 
 
-#post_response(get_msg())
-n = 1
+# Processes response
+def processes_response(msg: str) -> str:
+    rnumber = random.randint(0, 3)
 
-while True:
-    post_response('Test bot number ' + str(n))
-    n+=1
+    if "?" in str(msg).lower():
+        return "Eh uma pergunta."
+    else:
+        if rnumber == 0:
+            return "Ok"
+        elif rnumber == 1:
+            return "Claro"
+        else:
+            return "Sem problemas"
 
+
+processes_message = processes_response(get_msg())
+
+post_response(processes_message)
