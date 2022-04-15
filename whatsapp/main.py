@@ -44,7 +44,7 @@ def post_response(msg):
     pt.click()
     pt.typewrite(msg, interval=.05)
 
-    #pt.typewrite("\n", interval=.01)
+    pt.typewrite("\n", interval=.01)
 
 
 # Processes response
@@ -62,6 +62,9 @@ def processes_response(msg: str) -> str:
             return "Sem problemas"
 
 
-processes_message = processes_response(get_msg())
+# Check for new messagens
+def check_for_new_msg():
+    pt.moveTo(x+50,y-35, duration=.5)
 
-post_response(processes_message)
+
+check_for_new_msg()
