@@ -1,1 +1,1 @@
-# Automato From Whatsapp
+# Simple automatons
