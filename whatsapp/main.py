@@ -64,7 +64,30 @@ def processes_response(msg: str) -> str:
 
 # Check for new messagens
 def check_for_new_msg():
-    pt.moveTo(x+50,y-35, duration=.5)
+    pt.moveTo(x+50,y-35, duration=1)
+
+    while True:
+        #Continuously checks for green dot and new msg
+        try:
+            position = pt.locateOnScreen("whatsapp/unread.png", confidence=.7)
+
+            if position is not None:
+                pt.moveTo(position)
+                pt.moveRel(-100, 0)
+                pt.click()
+                sleep(1)
+        except(Exception):
+            print("No new other msg")
+
+        print(pt.pixel(pt.position()[0], pt.position()[1]))
+        print((x, y), pt.pixel(x, y))
+        if pt.pixelMatchesColor(int(x), int(y), (47, 59, 67), tolerance=10):
+            print("is_white")
+            processed_message = processes_response(get_msg())
+            post_response(processed_message)
+        else:
+            print("No new messages yet...")
+        sleep(5)
 
 
 check_for_new_msg()
